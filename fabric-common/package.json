@@ -25,6 +25,8 @@
 	},
 	"types": "./types/index.d.ts",
 	"dependencies": {
+		"@fidm/x509": "^1.2.1",
+		"callsite": "^1.0.0",
 		"elliptic": "^6.5.3",
 		"fabric-protos": "file:../fabric-protos",
 		"js-sha3": "^0.7.0",
@@ -34,8 +36,7 @@
 		"promise-settle": "^0.3.0",
 		"sjcl": "1.0.7",
 		"winston": "^2.4.0",
-		"yn": "^3.1.0",
-		"callsite": "^1.0.0"
+		"yn": "^3.1.0"
 	},
 	"optionalDependencies": {
 		"pkcs11js": "^1.0.6"

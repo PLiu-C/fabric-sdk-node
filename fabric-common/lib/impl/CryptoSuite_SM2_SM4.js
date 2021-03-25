@@ -104,7 +104,7 @@ class CryptoSuite_SM2_SM4 extends CryptoSuite {
 	 * The opts argument is not supported.
 	 */
 	hash(msg, opts) {
-		return this.msg;  // sm2_sm3: hash is done inside sign, so need to do this
+		return msg;  // sm2_sm3: hash is done inside sign, so need to do this
 	}
 
 	/**
@@ -116,7 +116,7 @@ class CryptoSuite_SM2_SM4 extends CryptoSuite {
 			throw new Error('A valid key is required to sign');
 		}
 
-		if (typeof digest === 'undefined' || digest === null) {
+		if (typeof data === 'undefined' || data === null) {
 			throw new Error('A valid message is required to sign');
 		}
 
@@ -126,7 +126,8 @@ class CryptoSuite_SM2_SM4 extends CryptoSuite {
         if (!key.isPrivate) 
             throw new Error('sign: must use a private key');
 
-        const signer = new Signer(2, null, key._pem);
+		const pubkey = key._key.asPublicKey().toString('pem');   // TODO: remove this when addon changed
+        const signer = new Signer(2, pubkey, key._pem);
         const signature = signer.sign(Buffer.from(data));
         return Buffer.from(signature, 'base64');
     }

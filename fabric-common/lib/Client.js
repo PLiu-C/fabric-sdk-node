@@ -432,7 +432,7 @@ const Client = class {
 			// generate X509 cert pair
 			// use the default software cryptosuite, not the client assigned cryptosuite, which may be
 			// HSM, or the default has been set to HSM. FABN-830
-			const key = newCryptoSuite({software: true}).generateEphemeralKey();
+			const key = newCryptoSuite({software: true, keysize: 256, algorithm: 'EC'}).generateEphemeralKey();
 			this._tls_mutual.clientKey = key.toBytes();
 			this._tls_mutual.clientCert = key.generateX509Certificate('fabric-common');
 			this._tls_mutual.selfGenerated = true;

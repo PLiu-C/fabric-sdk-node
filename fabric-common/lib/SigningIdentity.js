@@ -68,7 +68,10 @@ class SigningIdentity extends Identity {
 		}
 
 		const digest = hashFunction(msg);
-		return this._signer.sign(Buffer.from(digest, 'hex'), null);
+		if (typeof digest === 'string') {
+    		return this._signer.sign(Buffer.from(digest, 'hex'), null);
+		}
+		return this._signer.sign(digest, null)
 	}
 
 	static isInstance(object) {

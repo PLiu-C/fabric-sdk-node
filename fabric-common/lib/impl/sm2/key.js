@@ -10,6 +10,7 @@
 const Key = require('../../Key');
 const HashPrimitives = require('../../HashPrimitives');
 const ECKey = require('./ec-key');
+const { Certificate } = require('@fidm/x509');
 
 // Utilitly method to make sure the start and end markers are correct
 function makeRealPem(pem) {
@@ -39,8 +40,14 @@ class SM2Key extends Key {
         let pemString = Buffer.from(pem).toString();
         pemString = makeRealPem(pemString);
 
-        this._key = new ECKey(pemString, 'pem');
-        this._pem = pem.replace(/-----.*-----/, '').replace(/(\r\n|\n|\r)/gm, '');
+		if (pemString.includes('CERTIFICATE')) {
+			const cert = Certificate.fromPEM(Buffer.from(pemString));
+            this._pem = cert.publicKeyRaw.toString('base64');
+			this._key = new ECKey(`-----BEGIN PUBLIC KEY-----${this._pem}-----END PUBLIC KEY-----`, 'pem');
+		} else {
+            this._key = new ECKey(pemString, 'pem');
+            this._pem = pem.replace(/-----.*-----/g, '').replace(/(\r\n|\n|\r)/gm, '');
+		}
 	}
 
 	/**

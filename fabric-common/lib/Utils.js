@@ -42,7 +42,8 @@ function getSoftwareCryptoSuiteImpl() {
 	let result = exports.getConfigSetting('crypto-suite-software');
 	if (!result || isOldCryptoSuiteImpl(result)) {
 		result = {
-			EC: 'fabric-common/lib/impl/CryptoSuite_SM2_SM4'
+			SM: 'fabric-common/lib/impl/CryptoSuite_SM2_SM4',
+			EC: 'fabric-common/lib/impl/CryptoSuite_ECDSA_AES'
 		};
 	}
 	return result;
@@ -101,7 +102,7 @@ module.exports.newCryptoSuite = (setting) => {
 	if (setting && setting.algorithm && typeof setting === 'object' && typeof setting.algorithm === 'string') {
 		algorithm = setting.algorithm.toUpperCase();
 	} else {
-		algorithm = 'EC';
+		algorithm = 'SM';
 	}
 
 	if (setting && setting.hash && typeof setting === 'object' && typeof setting.hash === 'string') {
