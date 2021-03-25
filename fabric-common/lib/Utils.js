@@ -42,7 +42,7 @@ function getSoftwareCryptoSuiteImpl() {
 	let result = exports.getConfigSetting('crypto-suite-software');
 	if (!result || isOldCryptoSuiteImpl(result)) {
 		result = {
-			EC: 'fabric-common/lib/impl/CryptoSuite_ECDSA_AES'
+			EC: 'fabric-common/lib/impl/CryptoSuite_SM2_SM4'
 		};
 	}
 	return result;
