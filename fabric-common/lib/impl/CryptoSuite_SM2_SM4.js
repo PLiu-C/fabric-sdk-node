@@ -126,7 +126,8 @@ class CryptoSuite_SM2_SM4 extends CryptoSuite {
         if (!key.isPrivate) 
             throw new Error('sign: must use a private key');
 
-		const pubkey = key._key.asPublicKey().toString('pem');   // TODO: remove this when addon changed
+		let pubkey = key._key.asPublicECKey().toString('pem');   // TODO: remove this when addon changed
+		pubkey = pubkey.replace(/-----.*-----/g, '').replace(/(\r\n|\n|\r)/gm, '');
         const signer = new Signer(2, pubkey, key._pem);
         const signature = signer.sign(Buffer.from(data));
         return Buffer.from(signature, 'base64');

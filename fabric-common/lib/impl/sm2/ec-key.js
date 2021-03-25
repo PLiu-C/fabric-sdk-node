@@ -345,7 +345,7 @@ function ECKey(key, format) {
         isPrivateECKey: {
             enumerable: true,
             configurable: false,
-            value: (d !== null)
+            value: (d != null)
         },
         x: {
             enumerable: true,
